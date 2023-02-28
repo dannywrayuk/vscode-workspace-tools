@@ -15,9 +15,36 @@
     "commands": [
       {
         "command": "vscode-workspace-tools.helloWorld",
-        "title": "Hello World"
+        "title": "Add to Workspace"
+      },
+      {
+        "command": "vscode-workspace-tools.helloWorld2",
+        "title": "Rename in Workspace"
+      },
+      {
+        "command": "vscode-workspace-tools.helloWorld3",
+        "title": "Open Workspace Settings"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "vscode-workspace-tools.helloWorld",
+          "when": "explorerResourceIsFolder && !explorerResourceIsRoot",
+          "group": "2_workspace"
+        },
+        {
+          "command": "vscode-workspace-tools.helloWorld2",
+          "when": "explorerResourceIsFolder && !explorerResourceIsRoot",
+          "group": "2_workspace"
+        },
+        {
+          "command": "vscode-workspace-tools.helloWorld3",
+          "when": "explorerResourceIsRoot",
+          "group": "2_workspace"
+        }
+      ]
+    }
   },
   "scripts": {
     "build": "webpack",
