@@ -35,12 +35,12 @@
         },
         {
           "command": "vscode-workspace-tools.helloWorld2",
-          "when": "explorerResourceIsFolder && !explorerResourceIsRoot",
+          "when": "explorerResourceIsFolder && explorerResourceIsRoot && workbenchState == 'workspace'",
           "group": "2_workspace"
         },
         {
           "command": "vscode-workspace-tools.helloWorld3",
-          "when": "explorerResourceIsRoot",
+          "when": "explorerResourceIsRoot && workbenchState == 'workspace'",
           "group": "2_workspace"
         }
       ]
