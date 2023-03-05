@@ -1,28 +1,30 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const getWorkspaceIndex = (path: string) => {
+  const folders = vscode.workspace.workspaceFolders;
+  if (!folders) return -1;
+  if (folders.length < 2) return -1;
+  return folders.findIndex((folder) => folder.uri.path === path);
+};
+
+const validateUniqueName = (value: string) => {
+  const folders = vscode.workspace.workspaceFolders;
+  if (!folders) return false;
+  if (folders.length < 2) return false;
+  return folders.some((folder) => folder.name === value);
+};
+
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "vscode-workspace-tools" is now active!'
-  );
-
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
-    "vscode-workspace-tools.helloWorld",
+    "vscode-workspace-tools.add",
     (x) => {
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
       console.log(x);
-
-      vscode.window.showInformationMessage(
-        "Hello World from vscode-workspace-tools!"
+      vscode.workspace.updateWorkspaceFolders(
+        vscode.workspace.workspaceFolders
+          ? vscode.workspace.workspaceFolders.length
+          : 0,
+        null,
+        { uri: vscode.Uri.parse(x) }
       );
     }
   );
@@ -30,35 +32,30 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(disposable);
 
   disposable = vscode.commands.registerCommand(
-    "vscode-workspace-tools.helloWorld2",
-    (x) => {
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
-      console.log(x);
+    "vscode-workspace-tools.rename",
+    async (x) => {
+      const workspaceIndex = getWorkspaceIndex(vscode.Uri.parse(x).path);
 
-      vscode.window.showInformationMessage(
-        "Hello World from vscode-workspace-tools!"
-      );
-    }
-  );
+      const newName = await vscode.window.showInputBox({
+        title: "Rename Workspace Folder",
+        prompt:
+          "This will not change the name of the folder, only it's display name in the workspace.",
+        value: vscode.workspace.workspaceFolders?.[workspaceIndex].name || "",
+        validateInput: (value) => {
+          if (validateUniqueName(value))
+            return `Folder name "${value}" already exists.`;
+        },
+      });
+      if (!newName) return;
 
-  context.subscriptions.push(disposable);
-
-  disposable = vscode.commands.registerCommand(
-    "vscode-workspace-tools.helloWorld3",
-    (x) => {
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
-      console.log(x);
-
-      vscode.window.showInformationMessage(
-        "Hello World from vscode-workspace-tools!"
-      );
+      vscode.workspace.updateWorkspaceFolders(workspaceIndex, 1, {
+        uri: vscode.Uri.parse(x),
+        name: newName,
+      });
     }
   );
 
   context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}

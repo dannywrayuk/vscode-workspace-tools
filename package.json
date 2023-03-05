@@ -12,35 +12,30 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
+    "keybindings": {
+      "command": "workbench.action.openWorkspaceConfigFile",
+      "key": "cmd+shift+,"
+    },
     "commands": [
       {
-        "command": "vscode-workspace-tools.helloWorld",
+        "command": "vscode-workspace-tools.add",
         "title": "Add to Workspace"
       },
       {
-        "command": "vscode-workspace-tools.helloWorld2",
+        "command": "vscode-workspace-tools.rename",
         "title": "Rename in Workspace"
-      },
-      {
-        "command": "vscode-workspace-tools.helloWorld3",
-        "title": "Open Workspace Settings"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "vscode-workspace-tools.helloWorld",
+          "command": "vscode-workspace-tools.add",
           "when": "explorerResourceIsFolder && !explorerResourceIsRoot",
           "group": "2_workspace"
         },
         {
-          "command": "vscode-workspace-tools.helloWorld2",
+          "command": "vscode-workspace-tools.rename",
           "when": "explorerResourceIsFolder && explorerResourceIsRoot && workbenchState == 'workspace'",
-          "group": "2_workspace"
-        },
-        {
-          "command": "vscode-workspace-tools.helloWorld3",
-          "when": "explorerResourceIsRoot && workbenchState == 'workspace'",
           "group": "2_workspace"
         }
       ]
