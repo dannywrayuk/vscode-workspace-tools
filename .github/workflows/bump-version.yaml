@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: main
 
       - name: Git Config
         run: |
