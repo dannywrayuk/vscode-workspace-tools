@@ -1,7 +1,7 @@
 name: "Push Event"
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "src/**"
   pull_request:
@@ -14,13 +14,13 @@ jobs:
     uses: ./.github/workflows/build-test.yaml
   bump-version:
     name: 📈 Bump Package Version
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: build-test
     uses: ./.github/workflows/bump-version.yaml
     secrets: inherit
   publish:
     name: 🚀 Publish
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     needs: bump-version
     uses: ./.github/workflows/publish.yaml
     secrets: inherit
