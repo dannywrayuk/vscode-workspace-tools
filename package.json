@@ -26,6 +26,11 @@
       {
         "command": "vscode-workspace-tools.rename",
         "title": "Rename in Workspace"
+      },
+      {
+        "command": "workbench.action.openWorkspaceConfigFile",
+        "title": "Workspaces: Open Workspace Configuration File",
+        "icon": "$(json)"
       }
     ],
     "menus": {
@@ -39,6 +44,13 @@
           "command": "vscode-workspace-tools.rename",
           "when": "explorerResourceIsFolder && explorerResourceIsRoot && workbenchState == 'workspace'",
           "group": "2_workspace"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "workbench.action.openWorkspaceConfigFile",
+          "when": "view == workbench.explorer.fileView && workbenchState: 'workspace'",
+          "group": "navigation"
         }
       ]
     }
