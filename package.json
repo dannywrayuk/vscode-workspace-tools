@@ -49,7 +49,7 @@
       "view/title": [
         {
           "command": "workbench.action.openWorkspaceConfigFile",
-          "when": "view == workbench.explorer.fileView && workbenchState: 'workspace'",
+          "when": "view == workbench.explorer.fileView && workbenchState == 'workspace'",
           "group": "navigation"
         }
       ]
